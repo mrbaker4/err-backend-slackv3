@@ -162,13 +162,13 @@ class SlackRoom(Room):
     def create(self, private=False):
         try:
             if private:
-                log.info(f"Creating private conversation {self}.")
+                log.info(f"Creating private conversation.")
                 self._bot.slack_web.conversations_create(
-                    name=self.name, is_private=True
+                    name=self._name, is_private=True
                 )
             else:
-                log.info(f"Creating conversation {self}.")
-                self._bot.slack_web.conversations_create(name=self.name)
+                log.info(f"Creating conversation.")
+                self._bot.slack_web.conversations_create(name=self._name)
         except SlackAPIResponseError as e:
             if e.error == "user_is_bot":
                 raise RoomError(f"Unable to create channel. {USER_IS_BOT_HELPTEXT}")
